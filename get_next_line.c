@@ -6,67 +6,72 @@
 /*   By: alda-sil <alda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:51:24 by alda-sil          #+#    #+#             */
-/*   Updated: 2024/10/25 16:58:18 by alda-sil         ###   ########.fr       */
+/*   Updated: 2024/10/25 19:56:07 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
-static char	*joinfree(char *line, char *str)
+char *joinfree(char *line,char *buffer)
 {
 	char	*temp;
 
-	temp = ft_strjoin(line, str);
+	temp = ft_strjoin(line,buffer);
 	free(line);
-	return(temp);
+	return (temp);
 }
 
-/*
-char	get_last_line(char *line)
+#include <stdio.h>
+char	*line_read(int fd,char *line)
 {
-	char	*last_line;
-	char	*new_line;
-
-	new_line = '\0';
-	last_line = ft_strdup(line);
-	return (last_line);
-}
-*/
-
-static char *read_f(char *line, int fd)
-{
-	char	*str;
+	char	*buffer;
 	int		byte_lead;
+	char	*temp;
 
-	byte_lead = 1;
-	str = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (!str)
+	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
 		return (NULL);
-	while (byte_lead > 0)
+	byte_lead = 1;
+	while (byte_lead > 0 && !ft_strchr(line, '\n'))
 	{
-		byte_lead = read(fd,str,BUFFER_SIZE);
+
 		if (byte_lead < 0)
 		{
-			free(str);
+			free(buffer);
+			free(line);
 			return (NULL);
 		}
-		str[byte_lead] = '\0';
-		free(line);
-		line = joinfree(line, str);
-		if(ft_strchr(line, '\n'))
-			break;	
+				
+		if (!line)
+		{
+			free(buffer);
+			return (NULL);
+		}
+		if (byte_lead == -1)
+			break;
+		byte_lead = read(fd, buffer, BUFFER_SIZE);
+		buffer[byte_lead] = '\0';
+		temp = ft_strjoin(line,buffer);
+		if (!temp)
+		{
+			free(line);
+			free(buffer);
+		}
+		line = temp;
 	}
+	free(buffer);
 	return (line);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*line = NULL;
-	//char	*nextline;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	
+	if (fd < 0)
 		return (NULL);
-	else
-		read_f(line,fd);
-	return(line);	
+	line = line_read(fd, line);
+	if(!line)
+		return (NULL);
+	return(line);
 }

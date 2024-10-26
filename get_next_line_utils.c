@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:51:49 by alda-sil          #+#    #+#             */
-/*   Updated: 2024/10/25 16:37:13 by alda-sil         ###   ########.fr       */
+/*   Updated: 2024/10/25 21:13:53 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strchr(const char *s, int c)
 	int	i;
 
 	i = 0;
+	if (!s)
+		return (NULL);
 	while (s[i])
 	{
 		if (s[i] == (char)c)
@@ -38,36 +40,6 @@ size_t	ft_strlen(const char *str)
 	return (num);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*vec;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	if (!s1)
-		return (s2);
-	if (!s2)
-		return (NULL);
-	vec = (char *)malloc(sizeof(char) * ft_strlen(s1) + ft_strlen(s2));
-	if (!vec)
-		return (NULL);
-	while (s1[i])
-	{
-		vec[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-	{
-		vec[i] = s2[j];
-		j++;
-		i++;
-	}
-	vec[i] = '\0';
-	return (vec);
-}
-
 char	*ft_strdup(const char *s)
 {
 	int		i;
@@ -83,5 +55,24 @@ char	*ft_strdup(const char *s)
 	vec[i] = '\0';
 	return (vec);
 }
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char		*vec;
+	size_t		i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	vec = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!vec)
+		return (NULL);
+	while (s1 && *s1)
+		vec[i++] = *s1++;
+	while (s2 && *s2)
+		vec[i++] = *s2++;
+	vec[i] = '\0';
+	return (vec);
+}
+
 
 

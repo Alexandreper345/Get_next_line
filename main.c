@@ -15,12 +15,11 @@ int main()
         return 1;
     }
 
-    while ((line = get_next_line(fd)) != NULL) // Lê a linha
-    {
-        printf("%s\n", line); // Imprime a linha lida
-        free(line); // Libera a memória alocada pela get_next_line
-    }
-
+    line = get_next_line(fd);
+    while (line != NULL) {
+    printf("%s", line);
+    free(line); // Não esqueça de liberar a memória
+}
     close(fd);
     return 0;
 }
