@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:51:49 by alda-sil          #+#    #+#             */
-/*   Updated: 2024/11/01 16:08:56 by alda-sil         ###   ########.fr       */
+/*   Updated: 2024/11/01 18:42:16 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,16 @@ size_t	ft_strlen(const char *str)
 	return (num);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(char *s)
 {
 	int		i;
 	char	*vec;
 
 	i = 0;
 	vec = (char *)malloc(sizeof(char) * ft_strlen(s) + 1);
-	if (s[i])
+	if (vec == NULL)
+		return	(NULL);
+	while (s[i])
 	{
 		vec[i] = s[i];
 		i++;
@@ -85,6 +87,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	vec[i] = '\0';
 	if (!vec)
 		free(vec);
+	free(s1);
 	return (vec);
 }
 
