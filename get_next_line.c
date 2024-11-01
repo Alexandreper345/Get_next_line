@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alda-sil <alda-sil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alda-sil <alda-sil@student.42.rio>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:51:24 by alda-sil          #+#    #+#             */
-/*   Updated: 2024/10/29 20:23:31 by alda-sil         ###   ########.fr       */
+/*   Updated: 2024/11/01 15:53:49 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,29 @@
 
 char	*save_backup(char *c)
 {
-	char	*buckup;
+	char	*backup;
 	char	*newline;
 
 	newline = ft_strchr(c,'\n');
 	if (!newline)
 	{
-		free(c);
 		return (NULL);
 	}
-	buckup = ft_strdup(newline + 1);
-	if (!buckup)
+	backup = ft_strdup(newline + 1);
+	if (!backup)
 	{
 		free(c);
 		return (NULL);
 	}
-	return (buckup);
+	*newline = '\0';
+	return (backup);
 }
 
 char	*line_read(int fd,char *line)
 {
 	char	*buffer;
 	int		byte_lead;
+	char	*temp;
 	
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
@@ -46,20 +47,33 @@ char	*line_read(int fd,char *line)
 	while (byte_lead > 0)
 	{
 		byte_lead = read(fd, buffer, BUFFER_SIZE);
-		/*if (byte_lead < 0)
+		if (byte_lead < 0)
 		{
-			free
-		}*/
-		if (byte_lead == 0)
-			return(NULL);
+			free(buffer);
+			free(line);
+			return (NULL);
+		}
 		buffer[byte_lead] = '\0';
 		if (!line)
 			line = ft_strdup("");
-		line = ft_strjoin(line,buffer);
+		temp = ft_strjoin(line,buffer);
+		free(line);
+		line = temp;
+		if(line == NULL)
+		{
+			free(buffer);
+			return (NULL);
+		}
 		if (ft_strchr(buffer,'\n'))
 			break;
 	}
 	free(buffer);
+
+	if (byte_lead == 0 && line[0] == '\0')
+	{
+		free(line);
+		return(NULL);
+	}
 	return(line);
 }
 
@@ -73,7 +87,6 @@ char	*get_next_line(int fd)
 	s = line_read(fd, line);
 	if(!s)
 		return (NULL);
-
 	line = save_backup(s);
 	return(s);
 }

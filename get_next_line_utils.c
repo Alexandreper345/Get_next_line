@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:51:49 by alda-sil          #+#    #+#             */
-/*   Updated: 2024/10/29 20:18:51 by alda-sil         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:08:56 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	vec[i] = '\0';
 	if (!vec)
 		free(vec);
-	free(s1);
 	return (vec);
 }
 
