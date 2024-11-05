@@ -6,7 +6,7 @@
 /*   By: alda-sil <alda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:51:59 by alda-sil          #+#    #+#             */
-/*   Updated: 2024/11/04 19:05:15 by alda-sil         ###   ########.fr       */
+/*   Updated: 2024/11/05 18:12:18 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-char	*ft_strjoin(char  *s1, char *s2);
+char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(const char *str);
 char	*ft_strchr(const char *s, int c);
 char	*get_next_line(int fd);
