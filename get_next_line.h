@@ -6,14 +6,14 @@
 /*   By: alda-sil <alda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:51:59 by alda-sil          #+#    #+#             */
-/*   Updated: 2024/11/01 18:54:50 by alda-sil         ###   ########.fr       */
+/*   Updated: 2024/11/04 19:05:15 by alda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 6
+#  define BUFFER_SIZE 3
 # endif
 # include <stdlib.h>
 # include <unistd.h>
